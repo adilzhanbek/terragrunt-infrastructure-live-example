@@ -4,6 +4,10 @@
 # remote state, and locking: https://github.com/gruntwork-io/terragrunt
 # ---------------------------------------------------------------------------------------------------------------------
 
+# account.hcl -> account_name, account_id
+# region_vars / region.hcl -> region
+# environment_vars / env.hcl -> 
+
 locals {
   # Automatically load account-level variables
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
@@ -39,7 +43,7 @@ remote_state {
   backend = "s3"
   config = {
     encrypt        = true
-    bucket         = "${get_env("TG_BUCKET_PREFIX", "")}terragrunt-example-terraform-state-${local.account_name}-${local.aws_region}"
+    bucket         = "${get_env("TG_BUCKET_PREFIX", "")}teset-${local.account_name}-${local.aws_region}"
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.aws_region
     dynamodb_table = "terraform-locks"
